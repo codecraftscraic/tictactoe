@@ -28,7 +28,7 @@ function cellAvailable(cell)
 
 function centerSquare()
 {
-	if (cellAvailable("cell5") != "visible" && getImageVisible("cell5", "X") != "visible")
+	if ((cellAvailable(document.getElementById("cell5")) === true) && (getImageVisible("cell5", "X") != "visible"))
 	{
 		setImageVisible("cell5", true, "O");
 	}
