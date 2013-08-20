@@ -1,0 +1,13 @@
+tr, td {
+	border: 1px solid black;
+}
+
+td {
+	padding: 30px;
+}
+
+img {
+	width: 20px;
+	height: 20px;
+	visibility: hidden;
+}
