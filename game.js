@@ -84,6 +84,10 @@ function checkRowForWinOrBlock(row)
 	{
 		return blankcellid;
 	}
+	else if (blankcounter != 0)
+	{
+		return blankcellid;
+	}
 	else
 	{
 		return null;
@@ -145,6 +149,10 @@ function checkColumnForWinOrBlock(column)
 		return blankcellid;
 	}
 	else if (xcounter === 2)
+	{
+		return blankcellid;
+	}
+	else if (blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -518,13 +526,23 @@ function oPlay()
 		setImageVisible("cell1", true, "O");
 	}
 	//remainder of game
+	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible"))
+	{
+		setImageVisible("cell6", "visible", "O");
+	}
+	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible"))
+	{
+		setImageVisible("cell6", "visible", "O");
+	}
 	else if ((cellToPlay = checkRowForWinOrBlock(1)) != null)
 	{
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if	((cellToPlay = checkRowForWinOrBlock(2)) != null)
 	{
+		//alert("first "+cellToPlay);
 		setImageVisible(cellToPlay, true, "O");
+		//alert("second "+cellToPlay);
 	}
 	else if ((cellToPlay = checkRowForWinOrBlock(3)) != null)
 	{
@@ -582,14 +600,14 @@ function oPlay()
 	{
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible"))
-	{
-		setImageVisible("cell6", "visible", "O");
-	}
-	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible"))
-	{
-		setImageVisible("cell6", "visible", "O");
-	}
+	//else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible"))
+	//{
+		//setImageVisible("cell6", "visible", "O");
+	//}
+	//else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible"))
+	//{
+		//setImageVisible("cell6", "visible", "O");
+	//}
 }
 
 function endOfGameCheckRow(row)
@@ -848,6 +866,53 @@ function endOfGameCheckDiagonalThree()
 	}
 }
 
+function endOfGameFullBoard()
+{
+	var fullboardcounter = 0;
+	
+	if (endOfGameCheckRow(1) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckRow(2) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckRow(3) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckColumn(1) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckColumn(2) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckColumn(3) === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckDiagonalOne() === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	else if (endOfGameCheckDiagonalThree() === false)
+	{
+		fullboardcounter = fullboardcounter + 1;
+	}
+	
+	if (fullboardcounter === 8)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 function play(cell) 
 {
 	//alert(cell.id);
@@ -863,63 +928,35 @@ function play(cell)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckRow(1) === false)
-		{
-			alert("Draw! Refresh page to play again!");
-		}
 		else if (endOfGameCheckRow(2) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheckRow(2) === false)
-		{
-			alert("Draw! Refresh page to play again!");
 		}
 		else if (endOfGameCheckRow(3) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckRow(3) === false)
-		{
-			alert("Draw! Refresh page to play again!");
-		}
 		else if (endOfGameCheckColumn(1) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheckColumn(1) === false)
-		{
-			alert("Draw! Refresh page to play again!");
 		}
 		else if (endOfGameCheckColumn(2) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckColumn(2) === false)
-		{
-			alert("Draw! Refresh page to play again!");
-		}
 		else if (endOfGameCheckColumn(3) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheckColumn(3) === false)
-		{
-			alert("Draw! Refresh page to play again!");
 		}
 		else if (endOfGameCheckDiagonalOne() === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckDiagonalOne() === false)
-		{
-			alert("Draw! Refresh page to play again!");
-		}
 		else if (endOfGameCheckDiagonalThree() === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckDiagonalThree() === false)
+		else if (endOfGameFullBoard() === true)
 		{
 			alert("Draw! Refresh page to play again!");
 		}
