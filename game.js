@@ -76,15 +76,11 @@ function checkRowForWinOrBlock(row)
 		blankcellid = ("cell"+(startingcell+2));
 	}
 	
-	if (ocounter === 2)
+	if (ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2)
-	{
-		return blankcellid;
-	}
-	else if (blankcounter != 0)
+	else if (xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -144,15 +140,11 @@ function checkColumnForWinOrBlock(column)
 		blankcellid = ("cell"+(startingcell+6));
 	}
 	
-	if (ocounter === 2)
+	if (ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2)
-	{
-		return blankcellid;
-	}
-	else if (blankcounter === 1)
+	else if (xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -451,7 +443,7 @@ function checkForProgressionDiagonalOne()
 		blankcellid = ("cell"+(startingcell+8));
 	}
 	
-	if (ocounter === 1 && xcounter === 0)
+	if (ocounter === 1 && xcounter === 0 && blankcounter != 0)
 	{
 		return blankcellid;
 	}
@@ -459,7 +451,7 @@ function checkForProgressionDiagonalOne()
 
 function checkForProgressionDiagonalThree()
 {
-	var startingcell = "cell3";
+	var startingcell = 3;
 	var ocounter = 0;
 	var blankcounter = 0;
 	var xcounter = 0;
@@ -507,7 +499,7 @@ function checkForProgressionDiagonalThree()
 		blankcellid = ("cell"+(startingcell+6));
 	}
 	
-	if (ocounter === 1 && xcounter === 0)
+	if (ocounter === 1 && xcounter === 0 && blankcounter > 0)
 	{
 		return blankcellid;
 	}
@@ -526,11 +518,11 @@ function oPlay()
 		setImageVisible("cell1", true, "O");
 	}
 	//remainder of game
-	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible"))
+	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
 	{
 		setImageVisible("cell6", "visible", "O");
 	}
-	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible"))
+	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
 	{
 		setImageVisible("cell6", "visible", "O");
 	}
@@ -540,9 +532,7 @@ function oPlay()
 	}
 	else if	((cellToPlay = checkRowForWinOrBlock(2)) != null)
 	{
-		//alert("first "+cellToPlay);
 		setImageVisible(cellToPlay, true, "O");
-		//alert("second "+cellToPlay);
 	}
 	else if ((cellToPlay = checkRowForWinOrBlock(3)) != null)
 	{
@@ -600,14 +590,6 @@ function oPlay()
 	{
 		setImageVisible(cellToPlay, true, "O");
 	}
-	//else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible"))
-	//{
-		//setImageVisible("cell6", "visible", "O");
-	//}
-	//else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible"))
-	//{
-		//setImageVisible("cell6", "visible", "O");
-	//}
 }
 
 function endOfGameCheckRow(row)
@@ -838,18 +820,18 @@ function endOfGameCheckDiagonalThree()
 		blankcellid = ("cell"+(startingcell+2));
 	}
 	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
+	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
 	{
 		ocounter = ocounter + 1;
 	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
+	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
 	{
 		xcounter = xcounter + 1;
 	}
 	else
 	{
 		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
+		blankcellid = ("cell"+(startingcell+4));
 	}
 	
 	if (ocounter === 3)
@@ -867,43 +849,9 @@ function endOfGameCheckDiagonalThree()
 }
 
 function endOfGameFullBoard()
-{
-	var fullboardcounter = 0;
-	
-	if (endOfGameCheckRow(1) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckRow(2) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckRow(3) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckColumn(1) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckColumn(2) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckColumn(3) === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckDiagonalOne() === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	else if (endOfGameCheckDiagonalThree() === false)
-	{
-		fullboardcounter = fullboardcounter + 1;
-	}
-	
-	if (fullboardcounter === 8)
+{	
+	if ((endOfGameCheckRow(1) === false) && (endOfGameCheckRow(2) === false) && (endOfGameCheckRow(3) === false) && (endOfGameCheckColumn(1) === false)
+		&& (endOfGameCheckColumn(2) === false) && (endOfGameCheckColumn(3) === false) && (endOfGameCheckDiagonalOne() === false) && (endOfGameCheckDiagonalThree() === false))
 	{
 		return true;
 	}
@@ -915,7 +863,6 @@ function endOfGameFullBoard()
 
 function play(cell) 
 {
-	//alert(cell.id);
 	if (cellAvailable(cell) != true)
 	{
 		alert("That spot is taken, please choose again");
