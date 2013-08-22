@@ -932,8 +932,14 @@ function endOfGameCheckDiagonalThree()
 
 function endOfGameFullBoard()
 {	
-	if ((endOfGameCheckRow(1) === false) && (endOfGameCheckRow(2) === false) && (endOfGameCheckRow(3) === false) && (endOfGameCheckColumn(1) === false)
-		&& (endOfGameCheckColumn(2) === false) && (endOfGameCheckColumn(3) === false) && (endOfGameCheckDiagonalOne() === false) && (endOfGameCheckDiagonalThree() === false))
+	if ((endOfGameCheckRow(1) === false) && 
+		(endOfGameCheckRow(2) === false) && 
+		(endOfGameCheckRow(3) === false) && 
+		(endOfGameCheckColumn(1) === false) && 
+		(endOfGameCheckColumn(2) === false) && 
+		(endOfGameCheckColumn(3) === false) && 
+		(endOfGameCheckDiagonalOne() === false) && 
+		(endOfGameCheckDiagonalThree() === false))
 	{
 		return true;
 	}
