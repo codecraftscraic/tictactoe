@@ -26,7 +26,7 @@ function cellAvailable(cell)
 	}
 }
 
-function checkRowForWinOrBlock(row)
+function checkRowForWinOrBlock(row, image)
 {
 	var startingcell = 1+3*(row-1);
 	var ocounter = 0;
@@ -76,11 +76,11 @@ function checkRowForWinOrBlock(row)
 		blankcellid = ("cell"+(startingcell+2));
 	}
 	
-	if (ocounter === 2 && blankcounter === 1)
+	if (image === "O" && ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2 && blankcounter === 1)
+	else if (image === "X" && xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -90,7 +90,7 @@ function checkRowForWinOrBlock(row)
 	}
 }
 
-function checkColumnForWinOrBlock(column)
+function checkColumnForWinOrBlock(column, image)
 {
 	var startingcell = column;
 	var ocounter = 0;
@@ -140,11 +140,11 @@ function checkColumnForWinOrBlock(column)
 		blankcellid = ("cell"+(startingcell+6));
 	}
 	
-	if (ocounter === 2 && blankcounter === 1)
+	if (image === "O" && ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2 && blankcounter === 1)
+	else if (image === "X" && xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -154,7 +154,7 @@ function checkColumnForWinOrBlock(column)
 	}
 }
 
-function checkDiagonalOneForWinOrBlock()
+function checkDiagonalOneForWinOrBlock(image)
 {
 	var startingcell = 1;
 	var ocounter = 0;
@@ -204,11 +204,11 @@ function checkDiagonalOneForWinOrBlock()
 		blankcellid = ("cell"+(startingcell+8));
 	}
 	
-	if (ocounter === 2 && blankcounter === 1)
+	if (image === "O" && ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2 && blankcounter === 1)
+	else if (image === "X" && xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -218,7 +218,7 @@ function checkDiagonalOneForWinOrBlock()
 	}
 }
 
-function checkDiagonalThreeForWinOrBlock()
+function checkDiagonalThreeForWinOrBlock(image)
 {
 	var startingcell = 3;
 	var ocounter = 0;
@@ -254,25 +254,25 @@ function checkDiagonalThreeForWinOrBlock()
 		blankcellid = ("cell"+(startingcell+2));
 	}
 	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
+	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
 	{
 		ocounter = ocounter + 1;
 	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
+	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
 	{
 		xcounter = xcounter + 1;
 	}
 	else
 	{
 		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
+		blankcellid = ("cell"+(startingcell+4));
 	}
 	
-	if (ocounter === 2 && blankcounter === 1)
+	if (image === "O" && ocounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
-	else if (xcounter === 2 && blankcounter === 1)
+	else if (image === "X" && xcounter === 2 && blankcounter === 1)
 	{
 		return blankcellid;
 	}
@@ -505,89 +505,170 @@ function checkForProgressionDiagonalThree()
 	}
 }
 
+function findFirstBlank()
+{	
+	for (cell = 1; cell <10; cell++)
+	{
+		if (cellAvailable(document.getElementById("cell"+cell)) === true)
+		{
+			return "cell"+cell;	
+		}
+	}
+	
+	return null;
+}
+
 function oPlay()
 {
 	var cellToPlay;
-	//first play
-	if ((cellAvailable(document.getElementById("cell5")) === true) && (getImageVisible("cell5", "X") != "visible"))
+	//main game play
+	if ((cellToPlay = checkRowForWinOrBlock(1, "O")) != null)
 	{
-		setImageVisible("cell5", true, "O");
-	}
-	else if ((cellAvailable(document.getElementById("cell1")) === true) && (getImageVisible("cell1", "X") != "visible"))
-	{
-		setImageVisible("cell1", true, "O");
-	}
-	//remainder of game
-	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
-	{
-		setImageVisible("cell6", "visible", "O");
-	}
-	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
-	{
-		setImageVisible("cell6", "visible", "O");
-	}
-	else if ((cellToPlay = checkRowForWinOrBlock(1)) != null)
-	{
+		console.log("1");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if	((cellToPlay = checkRowForWinOrBlock(2)) != null)
+	else if	((cellToPlay = checkRowForWinOrBlock(2, "O")) != null)
 	{
+		console.log("2");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkRowForWinOrBlock(3)) != null)
+	else if ((cellToPlay = checkRowForWinOrBlock(3, "O")) != null)
 	{
+		console.log("3");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(1)) != null)
+	else if ((cellToPlay = checkColumnForWinOrBlock(1, "O")) != null)
 	{
+		console.log("4");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(2)) != null)
+	else if ((cellToPlay = checkColumnForWinOrBlock(2, "O")) != null)
 	{
+		console.log("5");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(3)) != null)
+	else if ((cellToPlay = checkColumnForWinOrBlock(3, "O")) != null)
 	{
+		console.log("6");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkDiagonalOneForWinOrBlock()) != null)
+	else if ((cellToPlay = checkDiagonalOneForWinOrBlock("O")) != null)
 	{
+		console.log("7");
 		setImageVisible(cellToPlay, true, "O");
 	}
-	else if ((cellToPlay = checkDiagonalThreeForWinOrBlock()) != null)
+	else if ((cellToPlay = checkDiagonalThreeForWinOrBlock("O")) != null)
 	{
+		console.log("8");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkRowForWinOrBlock(1, "X")) != null)
+	{
+		console.log("9");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if	((cellToPlay = checkRowForWinOrBlock(2, "X")) != null)
+	{
+		console.log("10");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkRowForWinOrBlock(3, "X")) != null)
+	{
+		console.log("11");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkColumnForWinOrBlock(1, "X")) != null)
+	{
+		console.log("12");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkColumnForWinOrBlock(2, "X")) != null)
+	{
+		console.log("13");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkColumnForWinOrBlock(3, "X")) != null)
+	{
+		console.log("14");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkDiagonalOneForWinOrBlock("X")) != null)
+	{
+		console.log("15");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	else if ((cellToPlay = checkDiagonalThreeForWinOrBlock("X")) != null)
+	{
+		console.log("16");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionRow(1)) != null)
 	{
+		console.log("17");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionRow(2)) != null)
 	{
+		console.log("18");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionRow(3)) != null)
 	{
+		console.log("19");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionColumn(1)) != null)
 	{
+		console.log("20");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionColumn(2)) != null)
 	{
+		console.log("21");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionColumn(3)) != null)
 	{
+		console.log("22");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionDiagonalOne()) != null)
 	{
+		console.log("23");
 		setImageVisible(cellToPlay, true, "O");
 	}
 	else if ((cellToPlay = checkForProgressionDiagonalThree()) != null)
 	{
+		console.log("24");
+		setImageVisible(cellToPlay, true, "O");
+	}
+	
+	//first play
+	else if ((cellAvailable(document.getElementById("cell5")) === true) && (getImageVisible("cell5", "X") != "visible"))
+	{
+		console.log("25");
+		setImageVisible("cell5", true, "O");
+	}
+	else if ((cellAvailable(document.getElementById("cell1")) === true) && (getImageVisible("cell1", "X") != "visible"))
+	{
+		console.log("26");
+		setImageVisible("cell1", true, "O");
+	}
+	//corner defense
+	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
+	{
+		console.log("27");
+		setImageVisible("cell6", "visible", "O");
+	}
+	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
+	{
+		console.log("28");
+		setImageVisible("cell6", "visible", "O");
+	}
+	//dead game but blanks to play
+	else if ((cellToPlay = findFirstBlank()) != null)
+	{
+		console.log("29");
 		setImageVisible(cellToPlay, true, "O");
 	}
 }
