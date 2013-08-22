@@ -655,7 +655,8 @@ function oPlay()
 		setImageVisible("cell1", true, "O");
 	}
 	//corner defense
-	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
+	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible")
+			&& (getImageVisible("cell6", "O") != "visible") && (getImageVisible("cell6", "X") != "visible"))
 	{
 		console.log("27");
 		setImageVisible("cell6", "visible", "O");
