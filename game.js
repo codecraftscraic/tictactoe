@@ -2,16 +2,21 @@
  * @author Jennifer Jensen
  */
 
+var gameStateArray = new Array();
+gameBoardArray[0] = 0;
+gameBoardArray[1] = 0;
+gameBoardArray[2] = 0;
+gameBoardArray[3] = 0;
+gameBoardArray[4] = 0;
+gameBoardArray[5] = 0;
+gameBoardArray[6] = 0;
+gameBoardArray[7] = 0;
+gameBoardArray[8] = 0;
+
 function setImageVisible(id, visible, image) 
 {
 var img = document.getElementById(id+image);
 img.style.visibility = (visible ? 'visible' : 'hidden');
-}
-
-function getImageVisible(id, image)
-{
-	var img = document.getElementById(id+image);
-	return(img.style.visibility);
 }
 
 function cellAvailable(cell)
@@ -26,63 +31,66 @@ function cellAvailable(cell)
 	}
 }
 
-function checkRowForWinOrBlock(row, image)
+function countMarkFrequency(cell1, cell2, cell3)
 {
-	var startingcell = 1+3*(row-1);
 	var ocounter = 0;
-	var blankcounter = 0;
 	var xcounter = 0;
-	var blankcellid = 0;
+	var blankcounter = 0;
 	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
+	if (cell1 === 2)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
+	else if (cell1 === 1)
 	{
 		xcounter = xcounter + 1;
 	}
 	else
 	{
 		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
 	}
 	
-	if ((getImageVisible("cell"+(startingcell + 1), "O") === "visible"))
+	if (cell2 === 2)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if ((getImageVisible("cell"+(startingcell + 1), "X") === "visible"))
+	else if (cell2 === 1)
 	{
 		xcounter = xcounter + 1;
 	}
 	else
 	{
 		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+1));
 	}
 	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
+	if (cell3 === 2)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
+	else if (cell3 === 1)
 	{
 		xcounter = xcounter + 1;
 	}
 	else
 	{
 		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
 	}
 	
-	if (image === "O" && ocounter === 2 && blankcounter === 1)
+	return new Array(blankcounter, xcounter, ocounter);
+	
+}
+
+function checkForWinOrBlock(cell1, cell2, cell3)
+{
+	var counters = countMarkFrequency(cell1, cell2, cell3);
+	
+	if (ocounter === 2 && blankcounter === 1)
 	{
-		return blankcellid;
+		return true;
 	}
-	else if (image === "X" && xcounter === 2 && blankcounter === 1)
+	else if (xcounter === 2 && blankcounter === 1)
 	{
-		return blankcellid;
+		return false;
 	}
 	else
 	{
@@ -90,421 +98,21 @@ function checkRowForWinOrBlock(row, image)
 	}
 }
 
-function checkColumnForWinOrBlock(column, image)
+function checkForProgression(cell1, cell2, cell3)
 {
-	var startingcell = column;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 3), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 3), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+3));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
-	}
-	
-	if (image === "O" && ocounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else if (image === "X" && xcounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-function checkDiagonalOneForWinOrBlock(image)
-{
-	var startingcell = 1;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+4));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 8), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 8), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+8));
-	}
-	
-	if (image === "O" && ocounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else if (image === "X" && xcounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-function checkDiagonalThreeForWinOrBlock(image)
-{
-	var startingcell = 3;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+4));
-	}
-	
-	if (image === "O" && ocounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else if (image === "X" && xcounter === 2 && blankcounter === 1)
-	{
-		return blankcellid;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-function checkForProgressionRow(row)
-{
-	var startingcell = 1+3*(row-1);
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 1), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 1), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+1));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
-	}
+	var counters = countMarkFrequency(cell1, cell2, cell3);
 	
 	if (ocounter === 1 && xcounter === 0)
 	{
-		return blankcellid;
-	}
-}
-function checkForProgressionColumn(column)
-{
-	var startingcell = column;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
+		return true;
 	}
 	else
 	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 3), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 3), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+3));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
-	}
-	
-	if (ocounter === 1 && xcounter === 0)
-	{
-		return blankcellid;
+		return null;
 	}
 }
 
-function checkForProgressionDiagonalOne()
-{
-	var startingcell = 1;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+4));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 8), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 8), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+8));
-	}
-	
-	if (ocounter === 1 && xcounter === 0 && blankcounter != 0)
-	{
-		return blankcellid;
-	}
-}
-
-function checkForProgressionDiagonalThree()
-{
-	var startingcell = 3;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
-	}
-	
-	if (ocounter === 1 && xcounter === 0 && blankcounter > 0)
-	{
-		return blankcellid;
-	}
-}
-
+//in the case where O doesn't need to go for win or block, just make a move.
 function findFirstBlank()
 {	
 	for (cell = 1; cell <10; cell++)
@@ -644,24 +252,24 @@ function oPlay()
 	}
 	
 	//first play
-	else if ((cellAvailable(document.getElementById("cell5")) === true) && (getImageVisible("cell5", "X") != "visible"))
+	else if ((cellAvailable(document.getElementById("cell5")) === true) && (checkSpotAvailable("cell5", "X") != "visible"))
 	{
 		console.log("25");
 		setImageVisible("cell5", true, "O");
 	}
-	else if ((cellAvailable(document.getElementById("cell1")) === true) && (getImageVisible("cell1", "X") != "visible"))
+	else if ((cellAvailable(document.getElementById("cell1")) === true) && (checkSpotAvailable("cell1", "X") != "visible"))
 	{
 		console.log("26");
 		setImageVisible("cell1", true, "O");
 	}
 	//corner defense
-	else if ((getImageVisible("cell1", "X") === "visible") && (getImageVisible("cell9", "X") === "visible")
-			&& (getImageVisible("cell6", "O") != "visible") && (getImageVisible("cell6", "X") != "visible"))
+	else if ((checkSpotAvailable("cell1", "X") === "visible") && (checkSpotAvailable("cell9", "X") === "visible")
+			&& (checkSpotAvailable("cell6", "O") != "visible") && (checkSpotAvailable("cell6", "X") != "visible"))
 	{
 		console.log("27");
 		setImageVisible("cell6", "visible", "O");
 	}
-	else if ((getImageVisible("cell3", "X") === "visible") && (getImageVisible("cell7", "X") === "visible") && (getImageVisible("cell6", "O") != "visible"))
+	else if ((checkSpotAvailable("cell3", "X") === "visible") && (checkSpotAvailable("cell7", "X") === "visible") && (checkSpotAvailable("cell6", "O") != "visible"))
 	{
 		console.log("28");
 		setImageVisible("cell6", "visible", "O");
@@ -676,53 +284,7 @@ function oPlay()
 
 function endOfGameCheckRow(row)
 {
-	var startingcell = 1+3*(row-1);
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 1), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 1), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+1));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
-	}
+	countMarkFrequency();
 	
 	if (ocounter === 3)
 	{
@@ -740,53 +302,7 @@ function endOfGameCheckRow(row)
 
 function endOfGameCheckColumn(column)
 {
-	var startingcell = column;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 3), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 3), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+3));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 6), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 6), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+6));
-	}
+	countMarkFrequency();
 	
 	if (ocounter === 3)
 	{
@@ -804,53 +320,7 @@ function endOfGameCheckColumn(column)
 
 function endOfGameCheckDiagonalOne()
 {
-	var startingcell = 1;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+4));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 8), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 8), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+8));
-	}
+	countMarkFrequency();
 	
 	if (ocounter === 3)
 	{
@@ -868,53 +338,7 @@ function endOfGameCheckDiagonalOne()
 
 function endOfGameCheckDiagonalThree()
 {
-	var startingcell = 3;
-	var ocounter = 0;
-	var blankcounter = 0;
-	var xcounter = 0;
-	var blankcellid = 0;
-	
-	if ((getImageVisible("cell"+startingcell, "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+startingcell, "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+startingcell);
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 2), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 2), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+2));
-	}
-	
-	if ((getImageVisible("cell"+(startingcell + 4), "O") === "visible"))
-	{
-		ocounter = ocounter + 1;
-	}
-	else if ((getImageVisible("cell"+(startingcell + 4), "X") === "visible"))
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-		blankcellid = ("cell"+(startingcell+4));
-	}
+	countMarkFrequency();
 	
 	if (ocounter === 3)
 	{
