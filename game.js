@@ -3,34 +3,30 @@
  */
 
 var gameStateArray = new Array();
-gameBoardArray[0] = 0;
-gameBoardArray[1] = 0;
-gameBoardArray[2] = 0;
-gameBoardArray[3] = 0;
-gameBoardArray[4] = 0;
-gameBoardArray[5] = 0;
-gameBoardArray[6] = 0;
-gameBoardArray[7] = 0;
-gameBoardArray[8] = 0;
+gameStateArray[0] = 0;
+gameStateArray[1] = 0;
+gameStateArray[2] = 0;
+gameStateArray[3] = 0;
+gameStateArray[4] = 0;
+gameStateArray[5] = 0;
+gameStateArray[6] = 0;
+gameStateArray[7] = 0;
+gameStateArray[8] = 0;
 
-function setImageVisible(id, visible, image) 
+//on click, sets X or O to visible
+function setMarkVisible(id, visible, mark) 
 {
-var img = document.getElementById(id+image);
-img.style.visibility = (visible ? 'visible' : 'hidden');
+	var mark = document.getElementById(id+mark);
+	mark.style.visibility = (visible ? 'visible' : 'hidden');
 }
 
+//checks to see if cell is available for a mark
 function cellAvailable(cell)
 {
-	if ((getImageVisible(cell.id, "X") != "visible") && (getImageVisible(cell.id, "O") != "visible"))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (gameStateArray[cell] === 0);
 }
 
+//counts the marks on the board
 function countMarkFrequency(cell1, cell2, cell3)
 {
 	var ocounter = 0;
@@ -80,15 +76,16 @@ function countMarkFrequency(cell1, cell2, cell3)
 	
 }
 
+//checks for a winning opportunity or a need to block X from winning
 function checkForWinOrBlock(cell1, cell2, cell3)
 {
-	var counters = countMarkFrequency(cell1, cell2, cell3);
+	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
 	
-	if (ocounter === 2 && blankcounter === 1)
+	if (counters[2] === 2 && counters[0] === 1)
 	{
 		return true;
 	}
-	else if (xcounter === 2 && blankcounter === 1)
+	else if (counters[1] === 2 && counters[0] === 1)
 	{
 		return false;
 	}
@@ -98,11 +95,12 @@ function checkForWinOrBlock(cell1, cell2, cell3)
 	}
 }
 
+//if no opportunity to win or need to block, starts the progression of play towards an O win
 function checkForProgression(cell1, cell2, cell3)
 {
-	var counters = countMarkFrequency(cell1, cell2, cell3);
+	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
 	
-	if (ocounter === 1 && xcounter === 0)
+	if (counters[2] === 1 && counters[1] === 0)
 	{
 		return true;
 	}
@@ -112,185 +110,257 @@ function checkForProgression(cell1, cell2, cell3)
 	}
 }
 
-//in the case where O doesn't need to go for win or block, just make a move.
-function findFirstBlank()
-{	
-	for (cell = 1; cell <10; cell++)
-	{
-		if (cellAvailable(document.getElementById("cell"+cell)) === true)
-		{
-			return "cell"+cell;	
-		}
-	}
-	
-	return null;
+//find first blank in given array
+function findFirst0InArray(cellArray) 
+{
+	return (cellArray.indexOf(0));
 }
 
+//looks for first blank on the game board
+function findFirst0InGameBoardArray() 
+{
+	return (gameStateArray.indexOf(0));
+}
+
+function playMark(arrpos, mark)
+{
+	if (mark === "X")
+	{
+		gameStateArray[arrpos] = 1;
+		setMarkVisible("cell"+arrpos, "visible", "X");
+	}
+	else if (mark === "O")
+	{
+		gameStateArray[arrpos] = 2;
+		setMarkVisible("cell"+arrpos, "visible", "O");
+	}
+	else
+	{
+		console.log("I didn't play an X or an O. You missed a case!")
+	}
+}
+
+//handles O's response to an X play
 function oPlay()
 {
-	var cellToPlay;
 	//main game play
-	if ((cellToPlay = checkRowForWinOrBlock(1, "O")) != null)
+	//check for win
+	if (checkForWinOrBlock(0, 1, 2) === true)
 	{
 		console.log("1");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
+		var givenArray = new Array (0, 1, 2);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if	((cellToPlay = checkRowForWinOrBlock(2, "O")) != null)
+	else if	(checkForWinOrBlock(3, 4, 5) === true)
 	{
 		console.log("2");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
+		var givenArray = new Array (3, 4, 5);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkRowForWinOrBlock(3, "O")) != null)
+	else if (checkForWinOrBlock(6, 7, 8) === true)
 	{
 		console.log("3");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
+		var givenArray = new Array (6, 7, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(1, "O")) != null)
+	else if (checkForWinOrBlock(0, 3, 6) === true)
 	{
 		console.log("4");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
+		var givenArray = new Array (0, 3, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(2, "O")) != null)
+	else if (checkForWinOrBlock(1, 4, 7) === true)
 	{
 		console.log("5");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
+		var givenArray = new Array (1, 4, 7);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(3, "O")) != null)
+	else if (checkForWinOrBlock(2, 5, 8) === true)
 	{
 		console.log("6");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
+		var givenArray = new Array (2, 5, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkDiagonalOneForWinOrBlock("O")) != null)
+	else if (checkForWinOrBlock(0, 4, 8) === true)
 	{
 		console.log("7");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
+		var givenArray = new Array (0, 4, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkDiagonalThreeForWinOrBlock("O")) != null)
+	else if (checkForWinOrBlock(2, 4, 6) === true)
 	{
 		console.log("8");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
+		var givenArray = new Array (2, 4, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkRowForWinOrBlock(1, "X")) != null)
+	//check for block
+	else if (checkForWinOrBlock(0, 1, 2) === false)
 	{
 		console.log("9");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
+		var givenArray = new Array (0, 1, 2);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if	((cellToPlay = checkRowForWinOrBlock(2, "X")) != null)
+	else if	(checkForWinOrBlock(3, 4, 5) === false)
 	{
 		console.log("10");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
+		var givenArray = new Array (3, 4, 5);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkRowForWinOrBlock(3, "X")) != null)
+	else if (checkForWinOrBlock(6, 7, 8) === false)
 	{
 		console.log("11");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
+		var givenArray = new Array (6, 7, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(1, "X")) != null)
+	else if (checkForWinOrBlock(0, 3, 6) === false)
 	{
 		console.log("12");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
+		console.log(cellArray);
+		var givenArray = new Array (0, 3, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		console.log(findFirst0InArray(cellArray));
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(2, "X")) != null)
+	else if (checkForWinOrBlock(1, 4, 7) === false)
 	{
 		console.log("13");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
+		var givenArray = new Array (1, 4, 7);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkColumnForWinOrBlock(3, "X")) != null)
+	else if (checkForWinOrBlock(2, 5, 8) === false)
 	{
 		console.log("14");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
+		var givenArray = new Array (2, 5, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkDiagonalOneForWinOrBlock("X")) != null)
+	else if (checkForWinOrBlock(0, 4, 8) === false)
 	{
 		console.log("15");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
+		var givenArray = new Array (0, 4, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkDiagonalThreeForWinOrBlock("X")) != null)
+	else if (checkForWinOrBlock(2, 4, 6) === false)
 	{
 		console.log("16");
-		setImageVisible(cellToPlay, true, "O");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
+		var givenArray = new Array (2, 4, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
-	else if ((cellToPlay = checkForProgressionRow(1)) != null)
-	{
-		console.log("17");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionRow(2)) != null)
-	{
-		console.log("18");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionRow(3)) != null)
-	{
-		console.log("19");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionColumn(1)) != null)
-	{
-		console.log("20");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionColumn(2)) != null)
-	{
-		console.log("21");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionColumn(3)) != null)
-	{
-		console.log("22");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionDiagonalOne()) != null)
-	{
-		console.log("23");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	else if ((cellToPlay = checkForProgressionDiagonalThree()) != null)
-	{
-		console.log("24");
-		setImageVisible(cellToPlay, true, "O");
-	}
-	
 	//first play
-	else if ((cellAvailable(document.getElementById("cell5")) === true) && (checkSpotAvailable("cell5", "X") != "visible"))
+	else if (gameStateArray[4] === 0)
 	{
 		console.log("25");
-		setImageVisible("cell5", true, "O");
+		playMark(4, "O");
 	}
-	else if ((cellAvailable(document.getElementById("cell1")) === true) && (checkSpotAvailable("cell1", "X") != "visible"))
+	else if (gameStateArray[0] === 0)
 	{
 		console.log("26");
-		setImageVisible("cell1", true, "O");
+		playMark(0, "O");
 	}
 	//corner defense
-	else if ((checkSpotAvailable("cell1", "X") === "visible") && (checkSpotAvailable("cell9", "X") === "visible")
-			&& (checkSpotAvailable("cell6", "O") != "visible") && (checkSpotAvailable("cell6", "X") != "visible"))
+	else if (gameStateArray[0] === 1 && gameStateArray[8] === 1 && gameStateArray[4] === 2)
 	{
 		console.log("27");
-		setImageVisible("cell6", "visible", "O");
+		playMark(5, "O");
 	}
-	else if ((checkSpotAvailable("cell3", "X") === "visible") && (checkSpotAvailable("cell7", "X") === "visible") && (checkSpotAvailable("cell6", "O") != "visible"))
+	else if (gameStateArray[2] === 1 && gameStateArray[6] === 1 && gameStateArray[4] === 2 && gameStateArray[5] === 0)
 	{
 		console.log("28");
-		setImageVisible("cell6", "visible", "O");
+		playMark(5, "O");
+	}
+	//check for a move to play if can't win or block
+	else if (checkForProgression(0, 1, 2) === true)
+	{
+		console.log("17");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
+		var givenArray = new Array (0, 1, 2);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(3, 4, 5) === true)
+	{
+		console.log("18");
+		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
+		var givenArray = new Array (3, 4, 5);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(6, 7, 8) === true)
+	{
+		console.log("19");
+		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
+		var givenArray = new Array (6, 7, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(0, 3, 6) === true)
+	{
+		console.log("20");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
+		var givenArray = new Array (0, 3, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(1, 4, 7) === true)
+	{
+		console.log("21");
+		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
+		var givenArray = new Array (1, 4, 7);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(2, 5, 8) === true)
+	{
+		console.log("22");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
+		var givenArray = new Array (2, 5, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(0, 4, 8) === true)
+	{
+		console.log("23");
+		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
+		var givenArray = new Array (0, 4, 8);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+	}
+	else if (checkForProgression(2, 4, 6) === true)
+	{
+		console.log("24");
+		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
+		var givenArray = new Array (2, 4, 6);
+		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
 	//dead game but blanks to play
-	else if ((cellToPlay = findFirstBlank()) != null)
+	else
 	{
 		console.log("29");
-		setImageVisible(cellToPlay, true, "O");
+		var nextAvailableBlankCell = findFirst0InGameBoardArray();
+		if (fullBoard != -1)
+		{
+			playMark(findFirst0InGameBoardArray(), "O");
+		}
 	}
 }
 
-function endOfGameCheckRow(row)
+//checks to see if the game is over with a winner
+function endOfGameCheck(cell1, cell2, cell3)
 {
-	countMarkFrequency();
+	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
 	
-	if (ocounter === 3)
+	if (counters[2] === 3)
 	{
 		return true;
 	}
-	else if (blankcounter === 0)
+	else if (counters[0] === 0)
 	{
 		return false;
 	}
@@ -300,118 +370,52 @@ function endOfGameCheckRow(row)
 	}
 }
 
-function endOfGameCheckColumn(column)
-{
-	countMarkFrequency();
-	
-	if (ocounter === 3)
-	{
-		return true;
-	}
-	else if (blankcounter === 0)
-	{
-		return false;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-function endOfGameCheckDiagonalOne()
-{
-	countMarkFrequency();
-	
-	if (ocounter === 3)
-	{
-		return true;
-	}
-	else if (blankcounter === 0)
-	{
-		return false;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-function endOfGameCheckDiagonalThree()
-{
-	countMarkFrequency();
-	
-	if (ocounter === 3)
-	{
-		return true;
-	}
-	else if (blankcounter === 0)
-	{
-		return false;
-	}
-	else
-	{
-		return null;
-	}
-}
-
+//checks to see if the board is full and if game is a draw
 function endOfGameFullBoard()
 {	
-	if ((endOfGameCheckRow(1) === false) && 
-		(endOfGameCheckRow(2) === false) && 
-		(endOfGameCheckRow(3) === false) && 
-		(endOfGameCheckColumn(1) === false) && 
-		(endOfGameCheckColumn(2) === false) && 
-		(endOfGameCheckColumn(3) === false) && 
-		(endOfGameCheckDiagonalOne() === false) && 
-		(endOfGameCheckDiagonalThree() === false))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (findFirst0InGameBoardArray() === -1);
 }
 
-function play(cell) 
+//handles play of game, alerts to the end of the game.
+function play(cell, cellnumber) 
 {
-	if (cellAvailable(cell) != true)
+	if (cellAvailable(cellnumber) === false)
 	{
 		alert("That spot is taken, please choose again");
 	}
-	else if (cellAvailable(cell) === true)
+	else
 	{
-		setImageVisible(cell.id, "visible", "X");
+		playMark(cellnumber, "X");
 		oPlay();
-		if (endOfGameCheckRow(1) === true)
+		if (endOfGameCheck(0, 1, 2) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckRow(2) === true)
+		else if (endOfGameCheck(3, 4, 5) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckRow(3) === true)
+		else if (endOfGameCheck(6, 7, 8) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckColumn(1) === true)
+		else if (endOfGameCheck(0, 3, 6) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckColumn(2) === true)
+		else if (endOfGameCheck(1, 4, 7) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckColumn(3) === true)
+		else if (endOfGameCheck(2, 5, 8) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckDiagonalOne() === true)
+		else if (endOfGameCheck(0, 4, 8) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
-		else if (endOfGameCheckDiagonalThree() === true)
+		else if (endOfGameCheck(2, 4, 6) === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
