@@ -348,9 +348,9 @@ function oPlay()
 	{
 		console.log("29");
 		var nextAvailableBlankCell = findFirst0InGameBoardArray();
-		if (fullBoard != -1)
+		if (nextAvailableBlankCell != -1)
 		{
-			playMark(findFirst0InGameBoardArray(), "O");
+			playMark(nextAvailableBlankCell, "O");
 		}
 	}
 }
