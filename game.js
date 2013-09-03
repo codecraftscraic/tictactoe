@@ -2,6 +2,10 @@
  * @author Jennifer Jensen
  */
 
+var BLANKSPOT = 0;
+var MARK_X = 1;
+var MARK_O = 2;
+
 var gameStateArray = new Array();
 gameStateArray[0] = 0;
 gameStateArray[1] = 0;
@@ -23,7 +27,7 @@ function setMarkVisible(id, visible, mark)
 //checks to see if cell is available for a mark
 function cellAvailable(cell)
 {
-	return (gameStateArray[cell] === 0);
+	return (gameStateArray[cell] === BLANKSPOT);
 }
 
 //counts the marks on the board
@@ -33,11 +37,11 @@ function countMarkFrequency(cell1, cell2, cell3)
 	var xcounter = 0;
 	var blankcounter = 0;
 	
-	if (cell1 === 2)
+	if (cell1 === MARK_O)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if (cell1 === 1)
+	else if (cell1 === MARK_X)
 	{
 		xcounter = xcounter + 1;
 	}
@@ -46,11 +50,11 @@ function countMarkFrequency(cell1, cell2, cell3)
 		blankcounter = blankcounter + 1;
 	}
 	
-	if (cell2 === 2)
+	if (cell2 === MARK_O)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if (cell2 === 1)
+	else if (cell2 === MARK_X)
 	{
 		xcounter = xcounter + 1;
 	}
@@ -59,11 +63,11 @@ function countMarkFrequency(cell1, cell2, cell3)
 		blankcounter = blankcounter + 1;
 	}
 	
-	if (cell3 === 2)
+	if (cell3 === MARK_O)
 	{
 		ocounter = ocounter + 1;
 	}
-	else if (cell3 === 1)
+	else if (cell3 === MARK_X)
 	{
 		xcounter = xcounter + 1;
 	}
@@ -126,12 +130,12 @@ function playMark(arrpos, mark)
 {
 	if (mark === "X")
 	{
-		gameStateArray[arrpos] = 1;
+		gameStateArray[arrpos] = MARK_X;
 		setMarkVisible("cell"+arrpos, "visible", "X");
 	}
 	else if (mark === "O")
 	{
-		gameStateArray[arrpos] = 2;
+		gameStateArray[arrpos] = MARK_O;
 		setMarkVisible("cell"+arrpos, "visible", "O");
 	}
 	else
@@ -261,23 +265,23 @@ function oPlay()
 		playMark(givenArray[findFirst0InArray(cellArray)], "O");
 	}
 	//first play
-	else if (gameStateArray[4] === 0)
+	else if (gameStateArray[4] === BLANKSPOT)
 	{
 		console.log("25");
 		playMark(4, "O");
 	}
-	else if (gameStateArray[0] === 0)
+	else if (gameStateArray[0] === BLANKSPOT)
 	{
 		console.log("26");
 		playMark(0, "O");
 	}
 	//corner defense
-	else if (gameStateArray[0] === 1 && gameStateArray[8] === 1 && gameStateArray[4] === 2)
+	else if (gameStateArray[0] === MARK_X && gameStateArray[8] === MARK_X && gameStateArray[4] === MARK_O)
 	{
 		console.log("27");
 		playMark(5, "O");
 	}
-	else if (gameStateArray[2] === 1 && gameStateArray[6] === 1 && gameStateArray[4] === 2 && gameStateArray[5] === 0)
+	else if (gameStateArray[2] === MARK_X && gameStateArray[6] === MARK_X && gameStateArray[4] === MARK_O && gameStateArray[5] === BLANKSPOT)
 	{
 		console.log("28");
 		playMark(5, "O");
