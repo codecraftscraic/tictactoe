@@ -30,87 +30,95 @@ function cellAvailable(cell)
 	return (gameStateArray[cell] === BLANKSPOT);
 }
 
+//returns the marks in a given array
+function markArray(cellIndex1, cellIndex2, cellIndex3)
+{
+	return new Array (gameStateArray[cellIndex1], gameStateArray[cellIndex2], gameStateArray[cellIndex3]);
+}
+
+//gets all rows
+function getRows()
+{
+	var rowOneArray = new Array(0,1,2);
+	var rowTwoArray = new Array(3,4,5);
+	var rowThreeArray = new Array(6,7,8);
+	return new Array(rowOneArray, rowTwoArray, rowThreeArray);
+}
+
+//gets all columns
+function getColumns()
+{
+	var columnOneArray = new Array(0,3,6);
+	var columnTwoArray = new Array(1,4,7);
+	var columnThreeArray = new Array(2,5,8);
+	return new Array(columnOneArray, columnTwoArray, columnThreeArray);
+}
+
+//gets all diagonals
+function getDiagonals()
+{
+	var diagonalOneArray = new Array(0,4,8);
+	var diagonalTwoArray = new Array(2,4,6);
+	return new Array(diagonalOneArray, diagonalTwoArray);
+}
+
 //counts the marks on the board
-function countMarkFrequency(cell1, cell2, cell3)
+function countMarkFrequency(cellArray)
 {
 	var ocounter = 0;
 	var xcounter = 0;
 	var blankcounter = 0;
 	
-	if (cell1 === MARK_O)
+	for (var i=0; i<3; i++)
 	{
-		ocounter = ocounter + 1;
-	}
-	else if (cell1 === MARK_X)
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-	}
-	
-	if (cell2 === MARK_O)
-	{
-		ocounter = ocounter + 1;
-	}
-	else if (cell2 === MARK_X)
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
-	}
-	
-	if (cell3 === MARK_O)
-	{
-		ocounter = ocounter + 1;
-	}
-	else if (cell3 === MARK_X)
-	{
-		xcounter = xcounter + 1;
-	}
-	else
-	{
-		blankcounter = blankcounter + 1;
+		if (cellArray[i] === MARK_O)
+		{
+			ocounter = ocounter + 1;
+		}
+		else if (cellArray[i] === MARK_X)
+		{
+			xcounter = xcounter + 1;
+		}
+		else
+		{
+			blankcounter = blankcounter + 1;
+		}
 	}
 	
 	return new Array(blankcounter, xcounter, ocounter);
 	
 }
 
-//checks for a winning opportunity or a need to block X from winning
-function checkForWinOrBlock(cell1, cell2, cell3)
+//checks for winning opportunity
+function checkForWin(cellArray)
 {
-	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
+	var counters = countMarkFrequency(cellArray);
 	
 	if (counters[2] === 2 && counters[0] === 1)
 	{
 		return true;
 	}
-	else if (counters[1] === 2 && counters[0] === 1)
+}
+
+//check for a block opportunity
+function checkForBlock (cellArray)
+{
+	var counters = countMarkFrequency(cellArray);
+	
+	if (counters[1] === 2 && counters[0] === 1)
 	{
-		return false;
-	}
-	else
-	{
-		return null;
+		return true;
 	}
 }
 
 //if no opportunity to win or need to block, starts the progression of play towards an O win
-function checkForProgression(cell1, cell2, cell3)
+function checkForProgression(cellArray)
 {
-	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
+	var counters = countMarkFrequency(cellArray);
 	
 	if (counters[2] === 1 && counters[1] === 0)
 	{
 		return true;
-	}
-	else
-	{
-		return null;
 	}
 }
 
@@ -126,6 +134,7 @@ function findFirst0InGameBoardArray()
 	return (gameStateArray.indexOf(0));
 }
 
+//plays the mark required in the cell
 function playMark(arrpos, mark)
 {
 	if (mark === "X")
@@ -149,228 +158,166 @@ function oPlay()
 {
 	//main game play
 	//check for win
-	if (checkForWinOrBlock(0, 1, 2) === true)
+	var rows = getRows();
+	console.log("checkForWin for loops");
+	for (var i=0; i<rows; i++)
 	{
-		console.log("1");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
-		var givenArray = new Array (0, 1, 2);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		console.log("in row checkForWin");
+		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
+		
+		if (checkForWin(marks) === true)
+		{
+			var givenArray = new Array (rows[i][0], rows[i][1], rows[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return true;
+		}
 	}
-	else if	(checkForWinOrBlock(3, 4, 5) === true)
+	
+	var columns = getColumns();
+	for (var i=0; i<columns; i++)
 	{
-		console.log("2");
-		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
-		var givenArray = new Array (3, 4, 5);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		console.log("in column checkForWin");
+		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
+		
+		if (checkForWin(marks) === true)
+		{
+			var givenArray = new Array (columns[i][0], columns[i][1], columns[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return true;
+		}
 	}
-	else if (checkForWinOrBlock(6, 7, 8) === true)
+	
+	var diagonals = getDiagonals();
+	for (var i=0; i<diagonals; i++)
 	{
-		console.log("3");
-		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
-		var givenArray = new Array (6, 7, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		console.log("in diagonal checkForWin");
+		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+		
+		if (checkForWin(marks) === true)
+		{
+			var givenArray = new Array (diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return true;
+		}
 	}
-	else if (checkForWinOrBlock(0, 3, 6) === true)
-	{
-		console.log("4");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
-		var givenArray = new Array (0, 3, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(1, 4, 7) === true)
-	{
-		console.log("5");
-		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
-		var givenArray = new Array (1, 4, 7);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(2, 5, 8) === true)
-	{
-		console.log("6");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
-		var givenArray = new Array (2, 5, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(0, 4, 8) === true)
-	{
-		console.log("7");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
-		var givenArray = new Array (0, 4, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(2, 4, 6) === true)
-	{
-		console.log("8");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
-		var givenArray = new Array (2, 4, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
+	
 	//check for block
-	else if (checkForWinOrBlock(0, 1, 2) === false)
+	console.log("You have reached checkForBlock");
+	rows = getRows();
+	for (var i=0; i<rows; i++)
 	{
-		console.log("9");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
-		var givenArray = new Array (0, 1, 2);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		console.log("In checkForBlock loop");
+		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
+		
+		if (checkForBlock(marks) === true)
+		{
+			console.log("in checkForBlock if statement");
+			var givenArray = new Array (rows[i][0], rows[i][1], rows[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
 	}
-	else if	(checkForWinOrBlock(3, 4, 5) === false)
+	
+	columns = getColumns();
+	for (var i=0; i<columns; i++)
 	{
-		console.log("10");
-		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
-		var givenArray = new Array (3, 4, 5);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
+		
+		if (checkForBlock(marks) === true)
+		{
+			var givenArray = new Array (columns[i][0], columns[i][1], columns[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
 	}
-	else if (checkForWinOrBlock(6, 7, 8) === false)
+	
+	diagonals = getDiagonals();
+	for (var i=0; i<diagonals; i++)
 	{
-		console.log("11");
-		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
-		var givenArray = new Array (6, 7, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
+		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+		
+		if (checkForBlock(marks) === true)
+		{
+			var givenArray = new Array (diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
 	}
-	else if (checkForWinOrBlock(0, 3, 6) === false)
-	{
-		console.log("12");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
-		console.log(cellArray);
-		var givenArray = new Array (0, 3, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-		console.log(findFirst0InArray(cellArray));
-	}
-	else if (checkForWinOrBlock(1, 4, 7) === false)
-	{
-		console.log("13");
-		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
-		var givenArray = new Array (1, 4, 7);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(2, 5, 8) === false)
-	{
-		console.log("14");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
-		var givenArray = new Array (2, 5, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(0, 4, 8) === false)
-	{
-		console.log("15");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
-		var givenArray = new Array (0, 4, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForWinOrBlock(2, 4, 6) === false)
-	{
-		console.log("16");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
-		var givenArray = new Array (2, 4, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
+	
 	//first play
-	else if (gameStateArray[4] === BLANKSPOT)
+	if (gameStateArray[4] === BLANKSPOT)
 	{
 		console.log("25");
 		playMark(4, "O");
+		return false;
 	}
 	else if (gameStateArray[0] === BLANKSPOT)
 	{
 		console.log("26");
 		playMark(0, "O");
+		return false;
 	}
 	//corner defense
-	else if (gameStateArray[0] === MARK_X && gameStateArray[8] === MARK_X && gameStateArray[4] === MARK_O)
+	else if (gameStateArray[0] === MARK_X && gameStateArray[8] === MARK_X && gameStateArray[4] === MARK_O && gameStateArray[5] === BLANKSPOT)
 	{
 		console.log("27");
 		playMark(5, "O");
+		return false;
 	}
 	else if (gameStateArray[2] === MARK_X && gameStateArray[6] === MARK_X && gameStateArray[4] === MARK_O && gameStateArray[5] === BLANKSPOT)
 	{
 		console.log("28");
 		playMark(5, "O");
-	}
-	//check for a move to play if can't win or block
-	else if (checkForProgression(0, 1, 2) === true)
-	{
-		console.log("17");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[1], gameStateArray[2]);
-		var givenArray = new Array (0, 1, 2);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(3, 4, 5) === true)
-	{
-		console.log("18");
-		var cellArray = new Array(gameStateArray[3], gameStateArray[4], gameStateArray[5]);
-		var givenArray = new Array (3, 4, 5);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(6, 7, 8) === true)
-	{
-		console.log("19");
-		var cellArray = new Array(gameStateArray[6], gameStateArray[7], gameStateArray[8]);
-		var givenArray = new Array (6, 7, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(0, 3, 6) === true)
-	{
-		console.log("20");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[3], gameStateArray[6]);
-		var givenArray = new Array (0, 3, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(1, 4, 7) === true)
-	{
-		console.log("21");
-		var cellArray = new Array(gameStateArray[1], gameStateArray[4], gameStateArray[7]);
-		var givenArray = new Array (1, 4, 7);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(2, 5, 8) === true)
-	{
-		console.log("22");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[5], gameStateArray[8]);
-		var givenArray = new Array (2, 5, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(0, 4, 8) === true)
-	{
-		console.log("23");
-		var cellArray = new Array(gameStateArray[0], gameStateArray[4], gameStateArray[8]);
-		var givenArray = new Array (0, 4, 8);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	else if (checkForProgression(2, 4, 6) === true)
-	{
-		console.log("24");
-		var cellArray = new Array(gameStateArray[2], gameStateArray[4], gameStateArray[6]);
-		var givenArray = new Array (2, 4, 6);
-		playMark(givenArray[findFirst0InArray(cellArray)], "O");
-	}
-	//dead game but blanks to play
-	else
-	{
-		console.log("29");
-		var nextAvailableBlankCell = findFirst0InGameBoardArray();
-		if (nextAvailableBlankCell != -1)
-		{
-			playMark(nextAvailableBlankCell, "O");
-		}
-	}
-}
-
-//checks to see if the game is over with a winner
-function endOfGameCheck(cell1, cell2, cell3)
-{
-	var counters = countMarkFrequency(gameStateArray[cell1], gameStateArray[cell2], gameStateArray[cell3]);
-	
-	if (counters[2] === 3)
-	{
-		return true;
-	}
-	else if (counters[0] === 0)
-	{
 		return false;
 	}
-	else
+	
+	//check for a move to play if can't win or block
+	rows = getRows();
+	for (var i=0; i<rows; i++)
 	{
-		return null;
+		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
+		
+		if (checkForProgression(marks) === true)
+		{
+			var givenArray = new Array (rows[i][0], rows[i][1], rows[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
+	}
+	
+	columns = getColumns();
+	for (var i=0; i<columns; i++)
+	{
+		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
+		
+		if (checkForProgression(marks) === true)
+		{
+			var givenArray = new Array (columns[i][0], columns[i][1], columns[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
+	}
+	
+	diagonals = getDiagonals();
+	for (var i=0; i<diagonals; i++)
+	{
+		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+		
+		if (checkForProgression(marks) === true)
+		{
+			var givenArray = new Array (diagonals[i][0], diagonals[i][1], diagonals[i][2]);
+			playMark(givenArray[findFirst0InArray(marks)], "O");
+			return false;
+		}
+	}
+	
+	//dead game but blanks to play
+	console.log("29");
+	var nextAvailableBlankCell = findFirst0InGameBoardArray();
+	if (nextAvailableBlankCell != -1)
+	{
+		playMark(nextAvailableBlankCell, "O");
+		return false;
 	}
 }
 
@@ -390,36 +337,8 @@ function play(cell, cellnumber)
 	else
 	{
 		playMark(cellnumber, "X");
-		oPlay();
-		if (endOfGameCheck(0, 1, 2) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(3, 4, 5) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(6, 7, 8) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(0, 3, 6) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(1, 4, 7) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(2, 5, 8) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(0, 4, 8) === true)
-		{
-			alert("Game Over, I win! Please refresh page to play again.");
-		}
-		else if (endOfGameCheck(2, 4, 6) === true)
+		var oPlayReturn = oPlay();
+		if (oPlayReturn === true)
 		{
 			alert("Game Over, I win! Please refresh page to play again.");
 		}
