@@ -1,189 +1,189 @@
 describe("game", function(){
 	
 	it ("counts marks on the board", function (){
-		var counters = countMarkFrequency(0, 0, 0);
+		var counters = countMarkFrequency(new Array (0, 0, 0));
 		expect(counters[0]).toBe(3);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 0, 1);
+		var counters = countMarkFrequency(new Array (0, 0, 1));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 0, 2);
+		var counters = countMarkFrequency(new Array (0, 0, 2));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 1, 0);
+		var counters = countMarkFrequency(new Array (0, 1, 0));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 1, 1);
+		var counters = countMarkFrequency(new Array (0, 1, 1));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 1, 2);
+		var counters = countMarkFrequency(new Array (0, 1, 2));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 2, 0);
+		var counters = countMarkFrequency(new Array (0, 2, 0));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 2, 1);
+		var counters = countMarkFrequency(new Array (0, 2, 1));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(0, 2, 2);
+		var counters = countMarkFrequency(new Array (0, 2, 2));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 0, 0);
+		var counters = countMarkFrequency(new Array (1, 0, 0));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(0);
 	});
-		
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 0, 1);
+		var counters = countMarkFrequency(new Array (1, 0, 1));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 0, 2);
+		var counters = countMarkFrequency(new Array (1, 0, 2));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 1, 0);
+		var counters = countMarkFrequency(new Array (1, 1, 0));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 1, 1);
+		var counters = countMarkFrequency(new Array (1, 1, 1));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(3);
 		expect(counters[2]).toBe(0);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 1, 2);
+		var counters = countMarkFrequency(new Array (1, 1, 2));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 2, 0);
+		var counters = countMarkFrequency(new Array (1, 2, 0));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 2, 1);
+		var counters = countMarkFrequency(new Array (1, 2, 1));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(1, 2, 2);
+		var counters = countMarkFrequency(new Array (1, 2, 2));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 0, 0);
+		var counters = countMarkFrequency(new Array (2, 0, 0));
 		expect(counters[0]).toBe(2);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 0, 1);
+		var counters = countMarkFrequency(new Array (2, 0, 1));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 0, 2);
+		var counters = countMarkFrequency(new Array (2, 0, 2));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 1, 0);
+		var counters = countMarkFrequency(new Array (2, 1, 0));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 1, 1);
+		var counters = countMarkFrequency(new Array (2, 1, 1));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(2);
 		expect(counters[2]).toBe(1);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 1, 2);
+		var counters = countMarkFrequency(new Array (2, 1, 2));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 2, 0);
+		var counters = countMarkFrequency(new Array (2, 2, 0));
 		expect(counters[0]).toBe(1);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 2, 1);
+		var counters = countMarkFrequency(new Array (2, 2, 1));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(1);
 		expect(counters[2]).toBe(2);
 	});
-	
+
 	it ("counts marks made on the board", function (){
-		var counters = countMarkFrequency(2, 2, 2);
+		var counters = countMarkFrequency(new Array (2, 2, 2));
 		expect(counters[0]).toBe(0);
 		expect(counters[1]).toBe(0);
 		expect(counters[2]).toBe(3);
@@ -243,99 +243,118 @@ describe("game", function(){
 		expect(cellCheck).toBe(true);
 	});
 	
-	it ("checks to see if O can win or if O needs to block X from winning", function(){
-		gameStateArray = new Array(0,0,0,0,0,1,0,0,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
+	it ("checks to see if O can win", function(){
+		expect(checkForWin(new Array (0,0,0))).toBe(false);
+		expect(checkForWin(new Array (0,0,1))).toBe(false);
+		expect(checkForWin(new Array (0,0,2))).toBe(false);
+	
+		expect(checkForWin(new Array (0,1,0))).toBe(false);
+		expect(checkForWin(new Array (0,1,1))).toBe(false);
+		expect(checkForWin(new Array (0,1,2))).toBe(false);
+
+		expect(checkForWin(new Array (0,2,0))).toBe(false);
+		expect(checkForWin(new Array (0,2,1))).toBe(false);
+		expect(checkForWin(new Array (0,2,2))).toBe(true);
+
+		expect(checkForWin(new Array (1,0,0))).toBe(false);
+		expect(checkForWin(new Array (1,0,1))).toBe(false);
+		expect(checkForWin(new Array (1,0,2))).toBe(false);
+
+		expect(checkForWin(new Array (1,1,0))).toBe(false);
+		expect(checkForWin(new Array (1,1,1))).toBe(false);
+		expect(checkForWin(new Array (1,1,2))).toBe(false);
 		
-		gameStateArray = new Array(0,1,0,0,1,1,0,1,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(false);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
+		expect(checkForWin(new Array (1,2,0))).toBe(false);
+		expect(checkForWin(new Array (1,2,1))).toBe(false);
+		expect(checkForWin(new Array (1,2,2))).toBe(false);
+
+		expect(checkForWin(new Array (2,0,0))).toBe(false);
+		expect(checkForWin(new Array (2,0,1))).toBe(false);
+		expect(checkForWin(new Array (2,0,2))).toBe(true);
+
+		expect(checkForWin(new Array (2,1,0))).toBe(false);
+		expect(checkForWin(new Array (2,1,1))).toBe(false);
+		expect(checkForWin(new Array (2,1,2))).toBe(false);
+
+		expect(checkForWin(new Array (2,2,0))).toBe(true);
+		expect(checkForWin(new Array (2,2,1))).toBe(false);
+		expect(checkForWin(new Array (2,2,2))).toBe(false);
+	});
+	
+	it ("checks to see if O needs to block X from winning", function(){
+		expect(checkForBlock(new Array (0,0,0))).toBe(false);
+		expect(checkForBlock(new Array (0,0,1))).toBe(false);
+		expect(checkForBlock(new Array (0,0,2))).toBe(false);
+	
+		expect(checkForBlock(new Array (0,1,0))).toBe(false);
+		expect(checkForBlock(new Array (0,1,1))).toBe(true);
+		expect(checkForBlock(new Array (0,1,2))).toBe(false);
+
+		expect(checkForBlock(new Array (0,2,0))).toBe(false);
+		expect(checkForBlock(new Array (0,2,1))).toBe(false);
+		expect(checkForBlock(new Array (0,2,2))).toBe(false);
+
+		expect(checkForBlock(new Array (1,0,0))).toBe(false);
+		expect(checkForBlock(new Array (1,0,1))).toBe(true);
+		expect(checkForBlock(new Array (1,0,2))).toBe(false);
+
+		expect(checkForBlock(new Array (1,1,0))).toBe(true);
+		expect(checkForBlock(new Array (1,1,1))).toBe(false);
+		expect(checkForBlock(new Array (1,1,2))).toBe(false);
 		
-		gameStateArray = new Array(0,2,0,0,2,1,0,2,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(true);
-		
-		gameStateArray = new Array(1,0,0,1,0,1,1,0,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(false);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,1,0,1,1,1,1,1,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(false);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,2,0,1,2,1,1,2,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,0,0,2,0,1,2,0,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(true);
-		
-		gameStateArray = new Array(2,1,0,2,1,1,2,1,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(null);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,2,0,2,2,1,2,2,2);
-		expect(checkForWinOrBlock(0,1,2)).toBe(true);
-		expect(checkForWinOrBlock(3,4,5)).toBe(null);
-		expect(checkForWinOrBlock(6,7,8)).toBe(null);
-		
+		expect(checkForBlock(new Array (1,2,0))).toBe(false);
+		expect(checkForBlock(new Array (1,2,1))).toBe(false);
+		expect(checkForBlock(new Array (1,2,2))).toBe(false);
+
+		expect(checkForBlock(new Array (2,0,0))).toBe(false);
+		expect(checkForBlock(new Array (2,0,1))).toBe(false);
+		expect(checkForBlock(new Array (2,0,2))).toBe(false);
+
+		expect(checkForBlock(new Array (2,1,0))).toBe(false);
+		expect(checkForBlock(new Array (2,1,1))).toBe(false);
+		expect(checkForBlock(new Array (2,1,2))).toBe(false);
+
+		expect(checkForBlock(new Array (2,2,0))).toBe(false);
+		expect(checkForBlock(new Array (2,2,1))).toBe(false);
+		expect(checkForBlock(new Array (2,2,2))).toBe(false);
 	});
 	
 	it ("Looks for places for O to progress game play when a win or block is not evident", function(){
-		gameStateArray = new Array(0,0,0,0,0,1,0,0,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(true);
+		expect(checkForProgression(new Array (0,0,0))).toBe(false);
+		expect(checkForProgression(new Array (0,0,1))).toBe(false);
+		expect(checkForProgression(new Array (0,0,2))).toBe(true);
+	
+		expect(checkForProgression(new Array (0,1,0))).toBe(false);
+		expect(checkForProgression(new Array (0,1,1))).toBe(false);
+		expect(checkForProgression(new Array (0,1,2))).toBe(false);
+
+		expect(checkForProgression(new Array (0,2,0))).toBe(true);
+		expect(checkForProgression(new Array (0,2,1))).toBe(false);
+		expect(checkForProgression(new Array (0,2,2))).toBe(false);
+
+		expect(checkForProgression(new Array (1,0,0))).toBe(false);
+		expect(checkForProgression(new Array (1,0,1))).toBe(false);
+		expect(checkForProgression(new Array (1,0,2))).toBe(false);
+
+		expect(checkForProgression(new Array (1,1,0))).toBe(false);
+		expect(checkForProgression(new Array (1,1,1))).toBe(false);
+		expect(checkForProgression(new Array (1,1,2))).toBe(false);
 		
-		gameStateArray = new Array(0,1,0,0,1,1,0,1,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(0,2,0,0,2,1,0,2,2);
-		expect(checkForProgression(0,1,2)).toBe(true);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,0,0,1,0,1,1,0,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,1,0,1,1,1,1,1,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,2,0,1,2,1,1,2,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,0,0,2,0,1,2,0,2);
-		expect(checkForProgression(0,1,2)).toBe(true);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,1,0,2,1,1,2,1,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,2,0,2,2,1,2,2,2);
-		expect(checkForProgression(0,1,2)).toBe(null);
-		expect(checkForProgression(3,4,5)).toBe(null);
-		expect(checkForProgression(6,7,8)).toBe(null);
+		expect(checkForProgression(new Array (1,2,0))).toBe(false);
+		expect(checkForProgression(new Array (1,2,1))).toBe(false);
+		expect(checkForProgression(new Array (1,2,2))).toBe(false);
+
+		expect(checkForProgression(new Array (2,0,0))).toBe(true);
+		expect(checkForProgression(new Array (2,0,1))).toBe(false);
+		expect(checkForProgression(new Array (2,0,2))).toBe(false);
+
+		expect(checkForProgression(new Array (2,1,0))).toBe(false);
+		expect(checkForProgression(new Array (2,1,1))).toBe(false);
+		expect(checkForProgression(new Array (2,1,2))).toBe(false);
+
+		expect(checkForProgression(new Array (2,2,0))).toBe(false);
+		expect(checkForProgression(new Array (2,2,1))).toBe(false);
+		expect(checkForProgression(new Array (2,2,2))).toBe(false);
 	});
 	
 	it ("checks for blanks (0s) in a given three cell array", function(){
@@ -383,58 +402,26 @@ describe("game", function(){
 		expect(findFirst0InGameBoardArray(gameStateArray)).toBe(8);
 	});
 	
-	it ("checks to see if O won, X won, or draw", function(){
-		gameStateArray = new Array(0,0,0,0,0,1,0,0,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(null);
-		expect(endOfGameCheck(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(0,1,0,0,1,1,0,1,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(null);
-		expect(endOfGameCheck(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(0,2,0,0,2,1,0,2,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(null);
-		expect(endOfGameCheck(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,0,0,1,0,1,1,0,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(null);
-		expect(endOfGameCheck(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(1,1,0,1,1,1,1,1,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(false);
-		expect(endOfGameCheck(6,7,8)).toBe(false);
-		
-		gameStateArray = new Array(1,2,0,1,2,1,1,2,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(false);
-		expect(endOfGameCheck(6,7,8)).toBe(false);
-		
-		gameStateArray = new Array(2,0,0,2,0,1,2,0,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(null);
-		expect(endOfGameCheck(6,7,8)).toBe(null);
-		
-		gameStateArray = new Array(2,1,0,2,1,1,2,1,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(false);
-		expect(endOfGameCheck(6,7,8)).toBe(false);
-		
-		gameStateArray = new Array(2,2,0,2,2,1,2,2,2);
-		expect(endOfGameCheck(0,1,2)).toBe(null);
-		expect(endOfGameCheck(3,4,5)).toBe(false);
-		expect(endOfGameCheck(6,7,8)).toBe(true);
-	});
-	
 	it ("checks to see if all cells in the game board array are taken", function(){
 		gameStateArray = new Array(0,0,0,0,0,0,0,0,0);
 		expect(endOfGameFullBoard()).toBe(false);
 		
 		gameStateArray = new Array(1,1,1,1,1,1,1,1,1);
 		expect(endOfGameFullBoard()).toBe(true);
+	});
+	
+	it ("gets all rows on the board and returns a full board array", function(){
+		gameStateArray = new Array(0,1,2,0,1,2,0,1,2);
+		expect(getRows()).toEqual([[0,1,2],[3,4,5],[6,7,8]]);
+	});
+	
+	it ("gets all columns on the board and returns a full board array", function(){
+		gameStateArray = new Array(0,1,2,0,1,2,0,1,2);
+		expect(getColumns()).toEqual([[0,3,6],[1,4,7],[2,5,8]]);
+	});
+	
+	it ("gets all diagonals on the board and returns a new array including both diagonals", function(){
+		gameStateArray = new Array(0,1,2,0,1,2,0,1,2);
+		expect(getDiagonals()).toEqual([[0,4,8],[2,4,6]]);
 	});
 });

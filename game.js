@@ -98,6 +98,10 @@ function checkForWin(cellArray)
 	{
 		return true;
 	}
+	else 
+	{
+		return false;
+	}
 }
 
 //check for a block opportunity
@@ -109,6 +113,10 @@ function checkForBlock (cellArray)
 	{
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 }
 
 //if no opportunity to win or need to block, starts the progression of play towards an O win
@@ -119,6 +127,10 @@ function checkForProgression(cellArray)
 	if (counters[2] === 1 && counters[1] === 0)
 	{
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -159,8 +171,7 @@ function oPlay()
 	//main game play
 	//check for win
 	var rows = getRows();
-	console.log("checkForWin for loops");
-	for (var i=0; i<rows; i++)
+	for (var i=0; i<rows.length; i++)
 	{
 		console.log("in row checkForWin");
 		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
@@ -174,9 +185,8 @@ function oPlay()
 	}
 	
 	var columns = getColumns();
-	for (var i=0; i<columns; i++)
+	for (var i=0; i<columns.length; i++)
 	{
-		console.log("in column checkForWin");
 		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
 		
 		if (checkForWin(marks) === true)
@@ -188,9 +198,8 @@ function oPlay()
 	}
 	
 	var diagonals = getDiagonals();
-	for (var i=0; i<diagonals; i++)
+	for (var i=0; i<diagonals.length; i++)
 	{
-		console.log("in diagonal checkForWin");
 		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
 		
 		if (checkForWin(marks) === true)
@@ -202,16 +211,13 @@ function oPlay()
 	}
 	
 	//check for block
-	console.log("You have reached checkForBlock");
 	rows = getRows();
-	for (var i=0; i<rows; i++)
+	for (var i=0; i<rows.length; i++)
 	{
-		console.log("In checkForBlock loop");
 		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
 		
 		if (checkForBlock(marks) === true)
 		{
-			console.log("in checkForBlock if statement");
 			var givenArray = new Array (rows[i][0], rows[i][1], rows[i][2]);
 			playMark(givenArray[findFirst0InArray(marks)], "O");
 			return false;
@@ -219,7 +225,7 @@ function oPlay()
 	}
 	
 	columns = getColumns();
-	for (var i=0; i<columns; i++)
+	for (var i=0; i<columns.length; i++)
 	{
 		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
 		
@@ -232,7 +238,7 @@ function oPlay()
 	}
 	
 	diagonals = getDiagonals();
-	for (var i=0; i<diagonals; i++)
+	for (var i=0; i<diagonals.length; i++)
 	{
 		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
 		
@@ -247,33 +253,29 @@ function oPlay()
 	//first play
 	if (gameStateArray[4] === BLANKSPOT)
 	{
-		console.log("25");
 		playMark(4, "O");
 		return false;
 	}
 	else if (gameStateArray[0] === BLANKSPOT)
 	{
-		console.log("26");
 		playMark(0, "O");
 		return false;
 	}
 	//corner defense
 	else if (gameStateArray[0] === MARK_X && gameStateArray[8] === MARK_X && gameStateArray[4] === MARK_O && gameStateArray[5] === BLANKSPOT)
 	{
-		console.log("27");
 		playMark(5, "O");
 		return false;
 	}
 	else if (gameStateArray[2] === MARK_X && gameStateArray[6] === MARK_X && gameStateArray[4] === MARK_O && gameStateArray[5] === BLANKSPOT)
 	{
-		console.log("28");
 		playMark(5, "O");
 		return false;
 	}
 	
 	//check for a move to play if can't win or block
 	rows = getRows();
-	for (var i=0; i<rows; i++)
+	for (var i=0; i<rows.length; i++)
 	{
 		var marks = markArray(rows[i][0], rows[i][1], rows[i][2]);
 		
@@ -286,7 +288,7 @@ function oPlay()
 	}
 	
 	columns = getColumns();
-	for (var i=0; i<columns; i++)
+	for (var i=0; i<columns.length; i++)
 	{
 		var marks = markArray(columns[i][0], columns[i][1], columns[i][2]);
 		
@@ -299,7 +301,7 @@ function oPlay()
 	}
 	
 	diagonals = getDiagonals();
-	for (var i=0; i<diagonals; i++)
+	for (var i=0; i<diagonals.length; i++)
 	{
 		var marks = markArray(diagonals[i][0], diagonals[i][1], diagonals[i][2]);
 		
@@ -312,7 +314,6 @@ function oPlay()
 	}
 	
 	//dead game but blanks to play
-	console.log("29");
 	var nextAvailableBlankCell = findFirst0InGameBoardArray();
 	if (nextAvailableBlankCell != -1)
 	{
